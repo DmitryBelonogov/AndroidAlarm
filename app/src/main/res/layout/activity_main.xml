@@ -21,6 +21,93 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main" />
+    <LinearLayout
+        android:layout_marginTop="56dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:orientation="horizontal"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:background="#add5f8">
+
+            <TextView
+                android:text="Add new"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_alignParentStart="true"
+                android:gravity="center_vertical"
+                android:textColor="#fff"
+                android:textSize="18sp"
+                android:paddingLeft="20dp" />
+
+            <ImageButton
+                android:src="@drawable/ic_add_black_36px"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/round_button"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
+                android:layout_height="48dp"
+                android:layout_width="48dp"
+                android:layout_centerVertical="false"
+                android:id="@+id/addAlarmBtn" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:background="#add5f8"
+            android:id="@+id/alarmEditor"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="35dp"
+                android:layout_marginLeft="35dp"
+                android:divider="@null"
+                android:dividerPadding="12dp">
+
+                <TimePicker
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/alarmTimePicker"
+                    android:headerBackground="@android:color/transparent"
+                    android:numbersBackgroundColor="@android:color/transparent" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:inputType="textPersonName"
+                    android:text="Name"
+                    android:ems="10"
+                    android:id="@+id/editText" />
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:id="@+id/spinner" />
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:id="@+id/spinner2" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

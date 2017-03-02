@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -26,7 +28,10 @@ public class MainActivity extends AppCompatActivity {
     private AlarmManager alarmManager;
     private PendingIntent pendingIntent;
 
-    private ToggleButton alarmToggleBtn;
+    private RelativeLayout alarmEditor;
+
+    private ImageButton addAlarmBtn;
+    //private ToggleButton alarmToggleBtn;
     private TimePicker alarmTimePicker;
 
     public static MainActivity instance() {
@@ -47,32 +52,33 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        alarmToggleBtn = (ToggleButton) findViewById(R.id.alarmToggle);
+        addAlarmBtn = (ImageButton) findViewById(R.id.addAlarmBtn);
         alarmTimePicker = (TimePicker) findViewById(R.id.alarmTimePicker);
+        alarmEditor = (RelativeLayout) findViewById(R.id.alarmEditor);
 
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-        alarmToggleBtn.setOnClickListener(new View.OnClickListener() {
+        addAlarmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!alarmToggleBtn.isChecked()) {
-                    alarmManager.cancel(pendingIntent);
-                    Log.i("Alarm", "Stop alarm");
-                    return;
+                if(alarmEditor.getVisibility() == View.VISIBLE) {
+                    alarmEditor.setVisibility(View.GONE);
+
+                    Calendar calendar = Calendar.getInstance();
+                    Intent intent = new Intent(MainActivity.this, AlarmReceiver.class);
+
+                    calendar.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getCurrentHour());
+                    calendar.set(Calendar.MINUTE, alarmTimePicker.getCurrentMinute());
+
+                    pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
+                    alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
                 }
-
-                Log.i("Alarm", "Start alarm");
-
-                Calendar calendar = Calendar.getInstance();
-                Intent intent = new Intent(MainActivity.this, AlarmReceiver.class);
-
-                calendar.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getCurrentHour());
-                calendar.set(Calendar.MINUTE, alarmTimePicker.getCurrentMinute());
-
-                pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
-                alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+                else {
+                    alarmEditor.setVisibility(View.VISIBLE);
+                }
             }
         });
+
     }
 
     public void showMsg(String msg) {
